@@ -1,0 +1,41 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="false"
+    android:orientation="vertical"
+    android:focusable="false"
+    android:paddingLeft="40dp"
+    tools:context=".MainActivity" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="39dp"
+        android:layout_margin="5dp"
+        android:focusable="false"
+        android:orientation="vertical"
+        android:gravity="fill_vertical">
+
+        <TextView
+            android:id="@+id/textViewCustomerName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textIsSelectable="true"
+            android:focusable="false"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:text="hello"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textViewCustomerLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:text="hello"
+            android:textIsSelectable="true"
+            android:textColor="#000000"
+            android:textSize="10sp"/>
+    </LinearLayout>
+
+</LinearLayout>

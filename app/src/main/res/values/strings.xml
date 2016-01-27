@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">SavingsCalculator</string>
+    <string name="action_settings">Settings</string>
+    <string name="save">SAVE</string>
+    <string name="add_customer">Add Customer</string>
+
+    <!-- Add Customer Strings -->
+    <string name="customer_name">Customer Name</string>
+    <string name="customer_address">Customer Address</string>
+    <string name="customer_email_id">Email Id</string>
+    <string name="customer_website">Website</string>
+    <string name="customer_landline_number">Office Number</string>
+    <string name="customer_owner_name">Owner Name</string>
+    <string name="customer_contact_number">Contact Number</string>
+    <string name="customer_contact_person_name">Contact Person Name</string>
+    <string name="customer_contact_person_contact_number">Contact Number</string>
+
+    <!-- Customer List Strings -->
+    <string name="number_of_areas">Areas</string>
+    <string name="total_savings">Total Savings</string>
+    <string name="title_activity_area_list">AreaListActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+
+</resources>
