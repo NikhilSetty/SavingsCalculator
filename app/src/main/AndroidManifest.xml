@@ -21,8 +21,12 @@
             android:label="Add Customer" >
         </activity>
         <activity
-            android:name=".Activities.AreaListActivity"
+            android:name=".Activities.Area.AreaListActivity"
             android:label="@string/title_activity_area_list" >
+        </activity>
+        <activity
+            android:name=".Activities.Area.AddAreaActivity"
+            android:label="@string/title_activity_add_area" >
         </activity>
     </application>
 

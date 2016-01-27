@@ -13,7 +13,7 @@ import com.ideasunlimited.savingscalculator.CustomerHelpers.CustomerDbHelper;
 import com.ideasunlimited.savingscalculator.CustomerHelpers.CustomerListViewAdapter;
 import com.ideasunlimited.savingscalculator.Model.CustomerModel;
 import com.ideasunlimited.savingscalculator.R;
-import com.ideasunlimited.savingscalculator.ViewModel.ChildDisplayModel;
+import com.ideasunlimited.savingscalculator.ViewModel.CustomerListChildViewModel;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     CustomerListViewAdapter listAdapter;
 
     List<CustomerModel> listDataHeader;
-    HashMap<CustomerModel, ChildDisplayModel> listDataChild;
+    HashMap<CustomerModel, CustomerListChildViewModel> listDataChild;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,48 +80,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void prepareListData() {
-        /*listDataHeader = new ArrayList<String>();
-        listDataChild = new HashMap<String, List<String>>();
 
-        // Adding child data
-        listDataHeader.add("Top 250");
-        listDataHeader.add("Now Showing");
-        listDataHeader.add("Coming Soon..");
-
-        // Adding child data
-        List<String> top250 = new ArrayList<String>();
-        top250.add("The Shawshank Redemption");
-        top250.add("The Godfather");
-        top250.add("The Godfather: Part II");
-        top250.add("Pulp Fiction");
-        top250.add("The Good, the Bad and the Ugly");
-        top250.add("The Dark Knight");
-        top250.add("12 Angry Men");
-
-        List<String> nowShowing = new ArrayList<String>();
-        nowShowing.add("The Conjuring");
-        nowShowing.add("Despicable Me 2");
-        nowShowing.add("Turbo");
-        nowShowing.add("Grown Ups 2");
-        nowShowing.add("Red 2");
-        nowShowing.add("The Wolverine");
-
-        List<String> comingSoon = new ArrayList<String>();
-        comingSoon.add("2 Guns");
-        comingSoon.add("The Smurfs 2");
-        comingSoon.add("The Spectacular Now");
-        comingSoon.add("The Canyons");
-        comingSoon.add("Europa Report");
-
-        listDataChild.put(listDataHeader.get(0), top250); // Header, Child data
-        listDataChild.put(listDataHeader.get(1), nowShowing);
-        listDataChild.put(listDataHeader.get(2), comingSoon);*/
-
-        listDataChild = new HashMap<CustomerModel, ChildDisplayModel>();
+        listDataChild = new HashMap<CustomerModel, CustomerListChildViewModel>();
         listDataHeader = CustomerDbHelper.GetAllCustomers(getApplicationContext());
 
         for(int i = 0; i < listDataHeader.size(); i++){
-            ChildDisplayModel childModel = CustomerDbHelper.GetChildDetailsForCustomer(getApplicationContext(), listDataHeader.get(i));
+            CustomerListChildViewModel childModel = CustomerDbHelper.GetChildDetailsForCustomer(getApplicationContext(), listDataHeader.get(i));
             listDataChild.put(listDataHeader.get(i), childModel);
         }
 
@@ -145,11 +109,6 @@ public class MainActivity extends AppCompatActivity {
 
         // setting list adapter
         expandableListView.setAdapter(listAdapter);
-    }
-
-    public void Details(View view) {
-
-
     }
 
     public void CallCustomer(View view) throws Exception {

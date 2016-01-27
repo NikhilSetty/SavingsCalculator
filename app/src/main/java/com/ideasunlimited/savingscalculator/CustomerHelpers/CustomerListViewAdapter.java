@@ -9,11 +9,11 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.ideasunlimited.savingscalculator.Activities.AreaListActivity;
-import com.ideasunlimited.savingscalculator.Activities.MainActivity;
+import com.ideasunlimited.savingscalculator.Activities.Area.AreaListActivity;
+import com.ideasunlimited.savingscalculator.Constants;
 import com.ideasunlimited.savingscalculator.Model.CustomerModel;
 import com.ideasunlimited.savingscalculator.R;
-import com.ideasunlimited.savingscalculator.ViewModel.ChildDisplayModel;
+import com.ideasunlimited.savingscalculator.ViewModel.CustomerListChildViewModel;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,10 +26,10 @@ public class CustomerListViewAdapter extends BaseExpandableListAdapter {
     private Context _context;
     private List<CustomerModel> _listDataHeader; // header titles
     // child data in format of header title, child title
-    private HashMap<CustomerModel, ChildDisplayModel> _listDataChild;
+    private HashMap<CustomerModel, CustomerListChildViewModel> _listDataChild;
 
     public CustomerListViewAdapter(Context context, List<CustomerModel> listDataHeader,
-                                 HashMap<CustomerModel, ChildDisplayModel> listChildData) {
+                                 HashMap<CustomerModel, CustomerListChildViewModel> listChildData) {
         this._context = context;
         this._listDataHeader = listDataHeader;
         this._listDataChild = listChildData;
@@ -37,7 +37,7 @@ public class CustomerListViewAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int groupPosition, int childPosititon) {
-        ChildDisplayModel child = _listDataChild.get(_listDataHeader.get(groupPosition));
+        CustomerListChildViewModel child = _listDataChild.get(_listDataHeader.get(groupPosition));
         return child;
     }
 
@@ -51,7 +51,7 @@ public class CustomerListViewAdapter extends BaseExpandableListAdapter {
                              boolean isLastChild, View convertView, ViewGroup parent) {
 
 
-        final ChildDisplayModel childModel = (ChildDisplayModel) getChild(groupPosition, childPosition);
+        final CustomerListChildViewModel childModel = (CustomerListChildViewModel) getChild(groupPosition, childPosition);
 
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context
@@ -72,7 +72,7 @@ public class CustomerListViewAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(_context, AreaListActivity.class);
-                i.putExtra("CustomerId", _listDataHeader.get(groupPosition)._id);
+                i.putExtra(Constants.CustomerIdExtraString , _listDataHeader.get(groupPosition)._id);
                 _context.startActivity(i);
             }
         });

@@ -3,43 +3,86 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/relative_layout_request_display"
         android:layout_width="fill_parent"
+        android:orientation="vertical"
         android:layout_height="wrap_content">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Time"
-            android:id="@+id/textView_AL_emailId"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:text="Website"
+            android:gravity="right"
+            android:id="@+id/textView_AL_emailId" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Customer Name"
-            android:id="@+id/textView3"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:id="@+id/textView_AL_CustomerName" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Customer Address"
-            android:id="@+id/textViewMyRequestString"
-            android:layout_below="@+id/textView3"
-            android:layout_marginTop="20dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:id="@+id/textView_AL_CustomerAddress"
+            android:layout_margin="2dp" />
 
-    </RelativeLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Owner : "
+            android:id="@+id/textView_AL_CustomerOwnerName"
+            android:layout_margin="2dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Contact Person : "
+            android:id="@+id/textView_AL_CustomerContactPersonName"
+            android:layout_margin="2dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Total Savings : "
+            android:id="@+id/textView_AL_TotalSavings"
+            android:layout_margin="2dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+
+            <Button android:id="@+id/button_AL_Call"
+                android:layout_width="wrap_content" android:layout_height="match_parent"
+                android:text="CALL"
+                android:layout_weight="0.5"
+                android:background="#FFF"
+                android:textColor="#843F2B" />
+
+            <Button android:id="@+id/button_AL_AddArea"
+                android:layout_width="wrap_content" android:layout_height="match_parent"
+                android:text="Add New Area"
+                android:background="#FFF"
+                android:textColor="#843F2B"
+                android:layout_weight="0.5" />
+
+            <Button android:id="@+id/button_AL_Details"
+                android:layout_width="wrap_content" android:layout_height="match_parent"
+                android:text="Details"
+                android:background="#FFF"
+                android:textColor="#843F2B"
+                android:layout_weight="0.5" />
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

@@ -1,5 +1,6 @@
 package com.ideasunlimited.savingscalculator.AreaHelper;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -62,5 +63,26 @@ public class AreaDbHelper {
 
     public static List<AreaModel> GetAreasFromCustomeModel(Context context, CustomerModel customerModel){
         return GetAreasFromCustomerId(context, customerModel._id);
+    }
+
+    public static boolean AddArea(Context context, AreaModel model) {
+        try {
+            DBHELPER = new DbHelper(context);
+            db = DBHELPER.getWritableDatabase();
+
+            ContentValues values = new ContentValues();
+            values.put(DbTableConstants.AREA_CUSTOMER_ID, model.CustomerId);
+            values.put(DbTableConstants.AREA_NAME, model.AreaName);
+            values.put(DbTableConstants.AREA_SIZE, model.AreaSize);
+
+            db.insert(DbTableConstants.AREA_TABLE_NAME, null, values);
+
+            return true;
+        }catch (Exception e){
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+            Log.e("ERROR", e.getMessage() );
+            return false;
+        }
+
     }
 }

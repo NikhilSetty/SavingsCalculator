@@ -11,7 +11,7 @@ import com.ideasunlimited.savingscalculator.DB.DbHelper;
 import com.ideasunlimited.savingscalculator.DB.DbTableConstants;
 import com.ideasunlimited.savingscalculator.Model.AreaModel;
 import com.ideasunlimited.savingscalculator.Model.CustomerModel;
-import com.ideasunlimited.savingscalculator.ViewModel.ChildDisplayModel;
+import com.ideasunlimited.savingscalculator.ViewModel.CustomerListChildViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,7 +88,7 @@ public class CustomerDbHelper {
         }
     }
 
-    public static ChildDisplayModel GetChildDetailsForCustomer(Context context, CustomerModel customerModel){
+    public static CustomerListChildViewModel GetChildDetailsForCustomer(Context context, CustomerModel customerModel){
 
         try {
             DBHELPER = new DbHelper(context);
@@ -96,7 +96,7 @@ public class CustomerDbHelper {
 
             List<AreaModel> areaList = AreaDbHelper.GetAreasFromCustomerId(context, customerModel._id);
 
-            ChildDisplayModel model = new ChildDisplayModel();
+            CustomerListChildViewModel model = new CustomerListChildViewModel();
 
             model.ContactNumber = customerModel.CustomerLandlineNumber;
             model.NumberOfAreas = Integer.toString(areaList.size());
@@ -113,7 +113,45 @@ public class CustomerDbHelper {
             
         }catch (Exception e){
             Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
-            return new ChildDisplayModel();
+            return new CustomerListChildViewModel();
+        }
+    }
+
+    public static CustomerModel GetCustomerModelFromId(Context context, String customerId){
+        try {
+            DBHELPER = new DbHelper(context);
+            db = DBHELPER.getWritableDatabase();
+
+            CustomerModel model = new CustomerModel();
+
+            Cursor c = db.rawQuery("SELECT * FROM " +
+                    DbTableConstants.CUSTOMER_TABLE_NAME + " WHERE _id = '" + customerId + "'", null);
+
+            if (c != null ) {
+                if  (c.moveToFirst()) {
+                    do {
+                        model.CustomerName = c.getString(c.getColumnIndex(DbTableConstants.CUSTOMER_NAME));
+                        model.CustomerLocation = c.getString(c.getColumnIndex(DbTableConstants.CUSTOMER_ADDRESS));
+                        model.CustomerEmailId = c.getString(c.getColumnIndex(DbTableConstants.CUSTOMER_EMAIL_ID));
+                        model.CustomerWebsite = c.getString(c.getColumnIndex(DbTableConstants.CUSTOMER_WEBSITE));
+                        model.CustomerLandlineNumber = c.getString(c.getColumnIndex(DbTableConstants.CUSTOMER_LANDLINE_NUMBER));
+                        model.CustomerOwnerName = c.getString(c.getColumnIndex(DbTableConstants.CUSTOMER_PHONE_NUMBER));
+                        model.CustomerPhoneNumber = c.getString(c.getColumnIndex(DbTableConstants.CUSTOMER_PHONE_NUMBER));
+                        model.CustomerContactPersonName = c.getString(c.getColumnIndex(DbTableConstants.CUSTOMER_CONTACT_PERSON_NAME));
+                        model.CustomerContactPersonContactNumber = c.getString(c.getColumnIndex(DbTableConstants.CUSTOMER_CONTACT_PERSON_CONTACT_NUMBER));
+                        model._id = c.getString(c.getColumnIndex("_id"));
+
+                    }while (c.moveToNext());
+                }
+            }else{
+                return null;
+            }
+            c.close();
+
+            return model;
+        }catch (Exception e){
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+            return null;
         }
     }
 }

@@ -20,6 +20,12 @@
     <string name="total_savings">Total Savings</string>
     <string name="title_activity_area_list">AreaListActivity</string>
 
+    <!-- Add Area Strings -->
+    <string name="area_name">Area Name</string>
+    <string name="area_size">Area Size</string>
+    <string name="save_and_add_appliance">Save And Add Appliances</string>
+
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_add_area">AddAreaActivity</string>
 
 </resources>
