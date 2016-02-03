@@ -7,10 +7,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.ideasunlimited.savingscalculator.ApplianceHelpers.ApplianceDbHelper;
 import com.ideasunlimited.savingscalculator.DB.DbHelper;
 import com.ideasunlimited.savingscalculator.DB.DbTableConstants;
+import com.ideasunlimited.savingscalculator.Model.ApplianceModel;
 import com.ideasunlimited.savingscalculator.Model.AreaModel;
 import com.ideasunlimited.savingscalculator.Model.CustomerModel;
+import com.ideasunlimited.savingscalculator.ViewModel.AreaListChildViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +48,12 @@ public class AreaDbHelper {
                         model.CustomerId = c.getString(c.getColumnIndex(DbTableConstants.AREA_CUSTOMER_ID));
                         model.AreaSavingsPerDay = c.getString(c.getColumnIndex(DbTableConstants.AREA_TOTAL_SAVINGS_PER_DAY));
                         model.AreaSavingsPerMonth = c.getString(c.getColumnIndex(DbTableConstants.AREA_TOTAL_SAVINGS_PER_MONTH));
+                        if(model.AreaSavingsPerDay == null){
+                            model.AreaSavingsPerDay = "0";
+                        }
+                        if(model.AreaSavingsPerMonth == null){
+                            model.AreaSavingsPerMonth = "0";
+                        }
 
                         list.add(model);
                     }while (c.moveToNext());
@@ -55,8 +64,8 @@ public class AreaDbHelper {
 
             return list;
         }catch (Exception e){
-            Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
-            Log.e("ERROR", e.getMessage() );
+            Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show();
+            Log.e("ERROR", e.toString() );
             return new ArrayList<>();
         }
     }
@@ -66,7 +75,8 @@ public class AreaDbHelper {
     }
 
     public static boolean AddArea(Context context, AreaModel model) {
-        try {
+        try
+        {
             DBHELPER = new DbHelper(context);
             db = DBHELPER.getWritableDatabase();
 
@@ -79,10 +89,45 @@ public class AreaDbHelper {
 
             return true;
         }catch (Exception e){
-            Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
-            Log.e("ERROR", e.getMessage() );
+            Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show();
+            Log.e("ERROR", e.toString() );
             return false;
         }
 
+    }
+
+    public static AreaListChildViewModel GetChildViewForAnArea(Context context, String areaId) {
+        try
+        {
+            DBHELPER = new DbHelper(context);
+            db = DBHELPER.getWritableDatabase();
+
+            AreaListChildViewModel childModel = new AreaListChildViewModel();
+
+            List<ApplianceModel> applianceModels = ApplianceDbHelper.GetAppliancesForAnArea(context, areaId);
+            if(applianceModels != null){
+                childModel.NumberOfAppliances = Integer.toString(applianceModels.size());
+
+                double currentCost = 0;
+                double costAfterSensor = 0;
+                for(int i = 0; i < applianceModels.size(); i++){
+                    currentCost += Double.parseDouble(applianceModels.get(i).ApplianceCostPerMonth);
+                    costAfterSensor += Double.parseDouble(applianceModels.get(i).ApplianceCostPerMonthAfterSensor);
+                }
+
+                childModel.CurrentCost = Double.toString(currentCost);
+                childModel.CostAfterMotionSensorInstalled = Double.toString(costAfterSensor);
+
+            }else{
+                return null;
+            }
+
+            return childModel;
+
+        }catch (Exception e){
+            Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show();
+            Log.e("ERROR", e.toString() );
+            return null;
+        }
     }
 }

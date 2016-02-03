@@ -25,6 +25,12 @@
     <string name="area_size">Area Size</string>
     <string name="save_and_add_appliance">Save And Add Appliances</string>
 
+
+    <!-- Area List Strings -->
+    <string name="area_number_of_appliances">Number of Appliances</string>
+    <string name="area_total_cost">Total Cost</string>
+    <string name="area_total_cost_after_sensor">Cost After Sensor</string>
+
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_add_area">AddAreaActivity</string>
 

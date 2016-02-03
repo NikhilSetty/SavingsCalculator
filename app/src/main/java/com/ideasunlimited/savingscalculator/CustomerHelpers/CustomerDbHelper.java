@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.ideasunlimited.savingscalculator.AreaHelper.AreaDbHelper;
@@ -45,7 +46,8 @@ public class CustomerDbHelper {
 
             return true;
         }catch (Exception e){
-            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+            Log.e("ERROR", e.toString());
             return false;
         }
     }
@@ -83,7 +85,8 @@ public class CustomerDbHelper {
 
             return list;
         }catch (Exception e){
-            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+            Log.e("ERROR", e.toString());
             return new ArrayList<CustomerModel>();
         }
     }
@@ -104,7 +107,9 @@ public class CustomerDbHelper {
             double totalSavings = 0;
 
             for(int i = 0; i < areaList.size(); i++){
-                totalSavings += Double.parseDouble(areaList.get(i).AreaSavingsPerMonth);
+                if(areaList.get(i).AreaSavingsPerMonth != null) {
+                    totalSavings += Double.parseDouble(areaList.get(i).AreaSavingsPerMonth);
+                }
             }
 
             model.TotalSavings = Double.toString(totalSavings);
@@ -112,7 +117,8 @@ public class CustomerDbHelper {
             return model;
             
         }catch (Exception e){
-            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+            Log.e("ERROR", e.toString());
             return new CustomerListChildViewModel();
         }
     }
@@ -135,7 +141,7 @@ public class CustomerDbHelper {
                         model.CustomerEmailId = c.getString(c.getColumnIndex(DbTableConstants.CUSTOMER_EMAIL_ID));
                         model.CustomerWebsite = c.getString(c.getColumnIndex(DbTableConstants.CUSTOMER_WEBSITE));
                         model.CustomerLandlineNumber = c.getString(c.getColumnIndex(DbTableConstants.CUSTOMER_LANDLINE_NUMBER));
-                        model.CustomerOwnerName = c.getString(c.getColumnIndex(DbTableConstants.CUSTOMER_PHONE_NUMBER));
+                        model.CustomerOwnerName = c.getString(c.getColumnIndex(DbTableConstants.CUSTOMER_OWNER_NAME));
                         model.CustomerPhoneNumber = c.getString(c.getColumnIndex(DbTableConstants.CUSTOMER_PHONE_NUMBER));
                         model.CustomerContactPersonName = c.getString(c.getColumnIndex(DbTableConstants.CUSTOMER_CONTACT_PERSON_NAME));
                         model.CustomerContactPersonContactNumber = c.getString(c.getColumnIndex(DbTableConstants.CUSTOMER_CONTACT_PERSON_CONTACT_NUMBER));
@@ -150,7 +156,8 @@ public class CustomerDbHelper {
 
             return model;
         }catch (Exception e){
-            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+            Log.e("ERROR", e.toString());
             return null;
         }
     }

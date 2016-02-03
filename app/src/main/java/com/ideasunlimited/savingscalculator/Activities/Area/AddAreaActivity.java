@@ -60,6 +60,11 @@ public class AddAreaActivity extends AppCompatActivity {
     }
 
     public void AddArea(View view) {
+        AddAreaToDb();
+        finish();
+    }
+
+    public void AddAreaToDb(){
         AreaModel model = new AreaModel();
 
         _areaName = _editTextAreaName.getText().toString();
@@ -76,7 +81,5 @@ public class AddAreaActivity extends AppCompatActivity {
         model.CustomerId = mCustomerId;
 
         AreaDbHelper.AddArea(getApplicationContext(), model);
-
-        finish();
     }
 }

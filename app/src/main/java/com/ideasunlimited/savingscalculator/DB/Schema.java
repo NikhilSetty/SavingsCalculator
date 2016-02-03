@@ -30,6 +30,7 @@ public class Schema {
 			+ DbTableConstants.APPLIANCE_AREA_ID + " string, "
 			+ DbTableConstants.APPLIANCE_COST_PER_DAY + " string, "
 			+ DbTableConstants.APPLIANCE_COST_PER_MONTH + " string, "
+			+ DbTableConstants.APPLIANCE_COST_PER_UNIT_ELECTRICITY + " string, "
 			+ DbTableConstants.APPLIANCE_WATTAGE + " string, "
 			+ DbTableConstants.APPLIANCE_WORKING_HOURS + " string, "
 			+ DbTableConstants.APPLIANCE_SAVINGS_PER_DAY + " string, "

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Number Of Areas -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/textView_AL_numberOfAppliancesLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="0.5"
+            android:textIsSelectable="true"
+            android:textColor="#000"
+            android:textSize="20sp"
+            android:text="@string/area_number_of_appliances"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/textView_AL_numberOfAppliances"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textIsSelectable="true"
+            android:textColor="#000"
+            android:textSize="20sp"
+            android:layout_weight="0.5"
+            android:gravity="end"
+            android:layout_margin="5dp"
+            android:text="hello" />
+    </LinearLayout>
+
+    <!-- Total Cost -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/textView_AL_totalCostLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="0.5"
+            android:textIsSelectable="true"
+            android:textColor="#000"
+            android:textSize="20sp"
+            android:text="@string/area_total_cost"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/textView_AL_totalCost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textIsSelectable="true"
+            android:textColor="#000"
+            android:textSize="20sp"
+            android:layout_weight="0.5"
+            android:gravity="end"
+            android:layout_margin="5dp"
+            android:text="hello" />
+    </LinearLayout>
+
+    <!-- Total Savings -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/textView_AL_costAfterSensorLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="0.5"
+            android:textIsSelectable="true"
+            android:textColor="#000"
+            android:textSize="20sp"
+            android:text="@string/area_total_cost_after_sensor"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/textView_AL_costAfterSensor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textIsSelectable="true"
+            android:textColor="#000"
+            android:textSize="20sp"
+            android:layout_weight="0.5"
+            android:gravity="end"
+            android:layout_margin="5dp"
+            android:text="hello" />
+    </LinearLayout>
+
+</LinearLayout>

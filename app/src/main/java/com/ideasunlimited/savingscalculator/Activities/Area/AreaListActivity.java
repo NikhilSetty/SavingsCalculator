@@ -4,20 +4,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ideasunlimited.savingscalculator.AreaHelper.AreaDbHelper;
+import com.ideasunlimited.savingscalculator.AreaHelper.AreaListViewAdapter;
 import com.ideasunlimited.savingscalculator.Constants;
 import com.ideasunlimited.savingscalculator.CustomerHelpers.CustomerDbHelper;
 import com.ideasunlimited.savingscalculator.Model.AreaModel;
 import com.ideasunlimited.savingscalculator.Model.CustomerModel;
 import com.ideasunlimited.savingscalculator.R;
-import com.ideasunlimited.savingscalculator.ViewModel.AreaListChildDViewModel;
+import com.ideasunlimited.savingscalculator.ViewModel.AreaListChildViewModel;
 import com.ideasunlimited.savingscalculator.ViewModel.CustomerListChildViewModel;
 
 import java.util.HashMap;
@@ -29,7 +32,9 @@ public class AreaListActivity extends AppCompatActivity {
     CustomerModel mCustomerModel;
     CustomerListChildViewModel mCustomerListChildViewModel;
     List<AreaModel> mAreaList;
-    HashMap<AreaModel, AreaListChildDViewModel> mChildViewList;
+    HashMap<AreaModel, AreaListChildViewModel> mChildViewList;
+    AreaListViewAdapter areaListViewAdapter;
+    ExpandableListView expandableListView;
 
     TextView mTextViewCustomerEmailId;
     TextView mTextViewCustomerName;
@@ -58,6 +63,8 @@ public class AreaListActivity extends AppCompatActivity {
         mTextViewCustomerTotalSavings = (TextView) findViewById(R.id.textView_AL_TotalSavings);
 
         mAddAreaButton = (Button) findViewById(R.id.button_AL_AddArea);
+
+        expandableListView = (ExpandableListView) findViewById(R.id.expandableListViewArea);
     }
 
     @Override
@@ -68,7 +75,6 @@ public class AreaListActivity extends AppCompatActivity {
 
         if(mCustomerId != null) {
             mCustomerModel = CustomerDbHelper.GetCustomerModelFromId(getApplicationContext(), mCustomerId);
-            mAreaList = AreaDbHelper.GetAreasFromCustomerId(getApplicationContext(), mCustomerId);
             mCustomerListChildViewModel = CustomerDbHelper.GetChildDetailsForCustomer(getApplicationContext(), mCustomerModel);
 
             if(mCustomerModel != null){
@@ -96,8 +102,42 @@ public class AreaListActivity extends AppCompatActivity {
         }
     }
 
-    private void PopulateDataInListView() {
+    @Override
+    protected void onResume(){
+        super.onResume();
 
+        PopulateDataInListView();
+    }
+
+    private void PopulateDataInListView() {
+        mAreaList = AreaDbHelper.GetAreasFromCustomerId(getApplicationContext(), mCustomerId);
+
+        mChildViewList = new HashMap<>();
+
+        for(int i = 0; i < mAreaList.size(); i++){
+            AreaListChildViewModel childModel = AreaDbHelper.GetChildViewForAnArea(getApplicationContext(), mAreaList.get(i)._id);
+            mChildViewList.put(mAreaList.get(i), childModel);
+        }
+
+        areaListViewAdapter = new AreaListViewAdapter(this, mAreaList, mChildViewList);
+
+/*        expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                Log.d("onGroupClick:", "worked");
+                parent.smoothScrollToPosition(groupPosition);
+
+                if (parent.isGroupExpanded(groupPosition)) {
+                    parent.collapseGroup(groupPosition);
+                } else {
+                    parent.expandGroup(groupPosition);
+                }
+
+                return true;
+            }
+        });*/
+
+        expandableListView.setAdapter(areaListViewAdapter);
     }
 
     @Override

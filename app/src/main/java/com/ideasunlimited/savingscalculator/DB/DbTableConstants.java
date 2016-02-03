@@ -32,6 +32,7 @@ public class DbTableConstants {
 	public static final String APPLIANCE_QUANTITY = "appliancequantity";
 	public static final String APPLIANCE_WORKING_HOURS = "applianceworkinghours";
 	public static final String APPLIANCE_ACTIVE_HOURS = "applianceactivehours";
+	public static final String APPLIANCE_COST_PER_UNIT_ELECTRICITY = "appliancecostperunit";
 	public static final String APPLIANCE_COST_PER_DAY = "appliancecostperday";
 	public static final String APPLIANCE_COST_PER_MONTH = "appliancecostpermonth";
 	public static final String APPLIANCE_SAVINGS_PER_DAY = "appliancesavingsperday";
