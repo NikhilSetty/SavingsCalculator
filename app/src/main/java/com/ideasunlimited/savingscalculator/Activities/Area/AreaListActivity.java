@@ -13,8 +13,8 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ideasunlimited.savingscalculator.AreaHelper.AreaDbHelper;
-import com.ideasunlimited.savingscalculator.AreaHelper.AreaListViewAdapter;
+import com.ideasunlimited.savingscalculator.AreaHelpers.AreaDbHelper;
+import com.ideasunlimited.savingscalculator.AreaHelpers.AreaListViewAdapter;
 import com.ideasunlimited.savingscalculator.Constants;
 import com.ideasunlimited.savingscalculator.CustomerHelpers.CustomerDbHelper;
 import com.ideasunlimited.savingscalculator.Model.AreaModel;
@@ -121,7 +121,7 @@ public class AreaListActivity extends AppCompatActivity {
 
         areaListViewAdapter = new AreaListViewAdapter(this, mAreaList, mChildViewList);
 
-/*        expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+        expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
                 Log.d("onGroupClick:", "worked");
@@ -135,7 +135,7 @@ public class AreaListActivity extends AppCompatActivity {
 
                 return true;
             }
-        });*/
+        });
 
         expandableListView.setAdapter(areaListViewAdapter);
     }

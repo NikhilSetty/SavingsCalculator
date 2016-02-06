@@ -33,5 +33,6 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_add_area">AddAreaActivity</string>
+    <string name="title_activity_appliance_list_view">ApplianceListViewActivity</string>
 
 </resources>

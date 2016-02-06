@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.ideasunlimited.savingscalculator.AreaHelper.AreaDbHelper;
+import com.ideasunlimited.savingscalculator.AreaHelpers.AreaDbHelper;
 import com.ideasunlimited.savingscalculator.DB.DbHelper;
 import com.ideasunlimited.savingscalculator.DB.DbTableConstants;
 import com.ideasunlimited.savingscalculator.Model.AreaModel;

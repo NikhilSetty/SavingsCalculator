@@ -1,4 +1,4 @@
-package com.ideasunlimited.savingscalculator.AreaHelper;
+package com.ideasunlimited.savingscalculator.AreaHelpers;
 
 import android.content.ContentValues;
 import android.content.Context;

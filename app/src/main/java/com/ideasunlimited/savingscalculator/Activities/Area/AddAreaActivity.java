@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.ideasunlimited.savingscalculator.AreaHelper.AreaDbHelper;
+import com.ideasunlimited.savingscalculator.AreaHelpers.AreaDbHelper;
 import com.ideasunlimited.savingscalculator.Constants;
 import com.ideasunlimited.savingscalculator.Model.AreaModel;
 import com.ideasunlimited.savingscalculator.R;

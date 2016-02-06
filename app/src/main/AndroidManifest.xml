@@ -28,6 +28,10 @@
             android:name=".Activities.Area.AddAreaActivity"
             android:label="@string/title_activity_add_area" >
         </activity>
+        <activity
+            android:name=".Activities.Appliance.ApplianceListViewActivity"
+            android:label="@string/title_activity_appliance_list_view" >
+        </activity>
     </application>
 
 </manifest>

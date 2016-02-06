@@ -6,4 +6,5 @@ package com.ideasunlimited.savingscalculator;
 public class Constants {
 
     public static final String CustomerIdExtraString = "CustomerId";
+    public static final String AreaIdExtraString = "AreaId";
 }

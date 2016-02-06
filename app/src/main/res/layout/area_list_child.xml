@@ -90,4 +90,10 @@
             android:text="hello" />
     </LinearLayout>
 
+    <Button android:id="@+id/button_AL_AreaDetails"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:text="DETAILS"
+        android:background="#FFF"
+        android:textColor="#843F2B" />
+
 </LinearLayout>

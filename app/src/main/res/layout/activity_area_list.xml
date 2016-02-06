@@ -18,5 +18,6 @@
             android:layout_height="match_parent"
             android:focusable="false"
             android:id="@+id/expandableListViewArea" />
+
     </LinearLayout>
 </RelativeLayout>

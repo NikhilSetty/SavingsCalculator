@@ -1,4 +1,4 @@
-package com.ideasunlimited.savingscalculator.AreaHelper;
+package com.ideasunlimited.savingscalculator.AreaHelpers;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,12 +9,11 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.ideasunlimited.savingscalculator.Activities.Area.AreaListActivity;
+import com.ideasunlimited.savingscalculator.Activities.Appliance.ApplianceListViewActivity;
 import com.ideasunlimited.savingscalculator.Constants;
 import com.ideasunlimited.savingscalculator.Model.AreaModel;
 import com.ideasunlimited.savingscalculator.R;
 import com.ideasunlimited.savingscalculator.ViewModel.AreaListChildViewModel;
-import com.ideasunlimited.savingscalculator.ViewModel.CustomerListChildViewModel;
 
 import java.util.HashMap;
 import java.util.List;
@@ -89,7 +88,7 @@ public class AreaListViewAdapter extends BaseExpandableListAdapter{
     }
 
     @Override
-    public View getChildView(int groupPosition, int childPosition, boolean b, View convertView, ViewGroup viewGroup) {
+    public View getChildView(final int groupPosition, int childPosition, boolean b, View convertView, ViewGroup viewGroup) {
 
         final AreaListChildViewModel childModel = (AreaListChildViewModel) getChild(groupPosition, childPosition);
 
@@ -105,6 +104,18 @@ public class AreaListViewAdapter extends BaseExpandableListAdapter{
         textViewTotalCost.setText(childModel.CurrentCost);
         TextView textViewTotalCostAfterSensor = (TextView) convertView.findViewById(R.id.textView_AL_costAfterSensor);
         textViewTotalCostAfterSensor.setText(childModel.CostAfterMotionSensorInstalled);
+
+        Button buttonDetails = (Button) convertView.findViewById(R.id.button_AL_AreaDetails);
+        buttonDetails.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent i = new Intent(_context, ApplianceListViewActivity.class);
+                        i.putExtra(Constants.AreaIdExtraString, _listDataHeader.get(groupPosition)._id);
+                        _context.startActivity(i);
+                    }
+                }
+        );
 
         return convertView;
     }
