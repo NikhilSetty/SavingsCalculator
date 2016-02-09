@@ -7,8 +7,9 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+
         <activity
-            android:name=".Activities.MainActivity"
+            android:name="com.ideasunlimited.savingscalculator.Activities.SplashScreenActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -16,18 +17,32 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".Activities.MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".Activities.AddCustomerActivity"
             android:label="Add Customer" >
         </activity>
+
         <activity
             android:name=".Activities.Area.AreaListActivity"
             android:label="@string/title_activity_area_list" >
         </activity>
+
         <activity
             android:name=".Activities.Area.AddAreaActivity"
             android:label="@string/title_activity_add_area" >
         </activity>
+
         <activity
             android:name=".Activities.Appliance.ApplianceListViewActivity"
             android:label="@string/title_activity_appliance_list_view" >
