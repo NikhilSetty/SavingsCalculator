@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.ideasunlimited.savingscalculator.Activities.Appliance.ApplianceListViewActivity;
 import com.ideasunlimited.savingscalculator.ApplianceHelpers.ApplianceDbHelper;
 import com.ideasunlimited.savingscalculator.DB.DbHelper;
 import com.ideasunlimited.savingscalculator.DB.DbTableConstants;
@@ -124,6 +125,47 @@ public class AreaDbHelper {
 
             return childModel;
 
+        }catch (Exception e){
+            Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show();
+            Log.e("ERROR", e.toString() );
+            return null;
+        }
+    }
+
+    public static AreaModel GetAreaDetailsForAreaId(Context context, String areaId) {
+
+        try
+        {
+            DBHELPER = new DbHelper(context);
+            db = DBHELPER.getWritableDatabase();
+
+            AreaModel model = new AreaModel();
+
+            Cursor c = db.rawQuery("SELECT * FROM " +
+                    DbTableConstants.AREA_TABLE_NAME + " WHERE _id = " + areaId, null);
+
+            if (c != null ) {
+                if  (c.moveToFirst()) {
+                    do {
+                        model._id = c.getString(c.getColumnIndex("_id"));
+                        model.AreaName = c.getString(c.getColumnIndex(DbTableConstants.AREA_NAME));
+                        model.AreaSize = c.getString(c.getColumnIndex(DbTableConstants.AREA_SIZE));
+                        model.CustomerId = c.getString(c.getColumnIndex(DbTableConstants.AREA_CUSTOMER_ID));
+                        model.AreaSavingsPerDay = c.getString(c.getColumnIndex(DbTableConstants.AREA_TOTAL_SAVINGS_PER_DAY));
+                        model.AreaSavingsPerMonth = c.getString(c.getColumnIndex(DbTableConstants.AREA_TOTAL_SAVINGS_PER_MONTH));
+                        if(model.AreaSavingsPerDay == null){
+                            model.AreaSavingsPerDay = "0";
+                        }
+                        if(model.AreaSavingsPerMonth == null){
+                            model.AreaSavingsPerMonth = "0";
+                        }
+                    }while (c.moveToNext());
+                }
+
+                c.close();
+            }
+
+            return model;
         }catch (Exception e){
             Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show();
             Log.e("ERROR", e.toString() );
