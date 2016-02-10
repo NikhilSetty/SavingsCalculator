@@ -8,8 +8,10 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.ideasunlimited.savingscalculator.ApplianceHelpers.ApplianceDbHelper;
+import com.ideasunlimited.savingscalculator.AreaHelpers.AreaDbHelper;
 import com.ideasunlimited.savingscalculator.Constants;
 import com.ideasunlimited.savingscalculator.Model.ApplianceModel;
+import com.ideasunlimited.savingscalculator.Model.AreaModel;
 import com.ideasunlimited.savingscalculator.R;
 
 import java.util.ArrayList;
@@ -20,6 +22,7 @@ public class ApplianceListViewActivity extends AppCompatActivity {
     ListView mApplianceListView;
     String mAreaId;
     List<ApplianceModel> mApplianceList;
+    AreaModel mAreaModel;
 
 
     @Override
@@ -39,6 +42,7 @@ public class ApplianceListViewActivity extends AppCompatActivity {
         super.onStart();
 
         mApplianceList = ApplianceDbHelper.GetAppliancesForAnArea(this, mAreaId);
+        mAreaModel = AreaDbHelper.GetAreaDetailsForAreaId(this, mAreaId);
 
         if(mApplianceList != null) {
             if (mApplianceList.size() == 0) {

@@ -64,6 +64,7 @@
             android:text="@string/save_and_add_appliance"
             android:background="#FFF"
             android:textColor="#843F2B"
+            android:onClick="AddAreaAndAddAppliance"
             android:layout_weight="0.5" />
     </LinearLayout>
 

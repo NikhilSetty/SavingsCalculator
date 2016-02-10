@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.ideasunlimited.savingscalculator.Activities.Appliance.ApplianceListViewActivity;
 import com.ideasunlimited.savingscalculator.AreaHelpers.AreaDbHelper;
 import com.ideasunlimited.savingscalculator.Constants;
 import com.ideasunlimited.savingscalculator.Model.AreaModel;
@@ -60,18 +61,19 @@ public class AddAreaActivity extends AppCompatActivity {
     }
 
     public void AddArea(View view) {
-        AddAreaToDb();
-        finish();
+        if(AddAreaToDb()) {
+            finish();
+        }
     }
 
-    public void AddAreaToDb(){
+    public boolean AddAreaToDb(){
         AreaModel model = new AreaModel();
 
         _areaName = _editTextAreaName.getText().toString();
         if(_areaName.isEmpty()){
             Toast.makeText(AddAreaActivity.this, "Please Enter Area Name!", Toast.LENGTH_LONG).show();
             _editTextAreaName.getBackground().setColorFilter(getResources().getColor(R.color.primaryColor), PorterDuff.Mode.SRC_ATOP);
-            return;
+            return false;
         }
 
         _areaSize = _editTextAreaSize.getText().toString();
@@ -81,5 +83,14 @@ public class AddAreaActivity extends AppCompatActivity {
         model.CustomerId = mCustomerId;
 
         AreaDbHelper.AddArea(getApplicationContext(), model);
+        return true;
+    }
+
+    public void AddAreaAndAddAppliance(View view) {
+        if(AddAreaToDb()) {
+            Intent i = new Intent(this, ApplianceListViewActivity.class);
+            startActivity(i);
+            finish();
+        }
     }
 }
