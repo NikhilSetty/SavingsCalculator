@@ -3,6 +3,7 @@ package com.ideasunlimited.savingscalculator.Activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 
 import com.ideasunlimited.savingscalculator.Constants;
 import com.ideasunlimited.savingscalculator.R;
@@ -18,28 +19,19 @@ public class SplashScreenActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-       Thread timer = new Thread()
-       {
-           @Override
-           public void run()
-           {
-               try
-               {
-                   sleep(Constants.SplashScreenWaitTime);
-               }
-               catch (InterruptedException ie)
-               {
-                   ie.printStackTrace();
-               }
-               finally
-               {
-                   Intent intent_mainActivity = new Intent(SplashScreenActivity.this,MainActivity.class);
-                   startActivity(intent_mainActivity);
-                   finish();
-               }
-           }
-       };
+        new Handler().postDelayed(new Runnable()
+        {
 
-        timer.start();
+            @Override
+            public void run() {
+                // This method will be executed once the timer is over
+                // Start your app main activity
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(i);
+
+                // close this activity
+                finish();
+            }
+        }, Constants.SplashScreenWaitTime);
     }
 }
