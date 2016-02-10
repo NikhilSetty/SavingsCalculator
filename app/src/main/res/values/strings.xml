@@ -4,6 +4,9 @@
     <string name="save">SAVE</string>
     <string name="add_customer">Add Customer</string>
 
+    <!-- Splash Screen Title String -->
+    <string name="splash_screen_title">Savings Calculator\nby</string>
+
     <!-- Add Customer Strings -->
     <string name="customer_name">Customer Name</string>
     <string name="customer_address">Customer Address</string>
