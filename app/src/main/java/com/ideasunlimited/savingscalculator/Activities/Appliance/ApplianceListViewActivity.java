@@ -1,13 +1,21 @@
 package com.ideasunlimited.savingscalculator.Activities.Appliance;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.ideasunlimited.savingscalculator.ApplianceHelpers.ApplianceDbHelper;
+import com.ideasunlimited.savingscalculator.ApplianceHelpers.ApplianceListViewAdapter;
 import com.ideasunlimited.savingscalculator.AreaHelpers.AreaDbHelper;
 import com.ideasunlimited.savingscalculator.Constants;
 import com.ideasunlimited.savingscalculator.Model.ApplianceModel;
@@ -24,6 +32,8 @@ public class ApplianceListViewActivity extends AppCompatActivity {
     List<ApplianceModel> mApplianceList;
     AreaModel mAreaModel;
 
+    int mCostPerUnitElectricity;
+    Button mButtonCostPerUnitElectricity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +44,7 @@ public class ApplianceListViewActivity extends AppCompatActivity {
         mAreaId = i.getStringExtra(Constants.AreaIdExtraString);
 
         mApplianceListView = (ListView) findViewById(R.id.listViewApplianceList);
+        mButtonCostPerUnitElectricity = (Button) findViewById(R.id.buttonCostPerUnit);
         mApplianceList = new ArrayList<>();
     }
 
@@ -46,7 +57,9 @@ public class ApplianceListViewActivity extends AppCompatActivity {
 
         if(mApplianceList != null) {
             if (mApplianceList.size() == 0) {
-
+                mCostPerUnitElectricity = 5;
+                setCostPerUnitButtonText();
+                // todo Replace with error text
             } else {
                 PopulateListView();
             }
@@ -54,7 +67,14 @@ public class ApplianceListViewActivity extends AppCompatActivity {
     }
 
     private void PopulateListView() {
+        try{
+            ApplianceListViewAdapter adapter = new ApplianceListViewAdapter(this, (ApplianceModel[]) mApplianceList.toArray());
 
+            mApplianceListView.setAdapter(adapter);
+        }catch (Exception e){
+            Toast.makeText(ApplianceListViewActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
+            // todo Replace with error text
+        }
     }
 
     @Override
@@ -77,5 +97,53 @@ public class ApplianceListViewActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setCostPerUnitButtonText(){
+        mButtonCostPerUnitElectricity.setText("COST PER UNIT : " + mCostPerUnitElectricity);
+    }
+
+    public void ChangeCostPerUnit(View view) {
+        try{
+            LayoutInflater layoutInflater = LayoutInflater.from(this);
+            View changeCpuView = layoutInflater.inflate(R.layout.alert_change_cost_per_unit, null);
+
+            final EditText requestEditText = (EditText) changeCpuView.findViewById(R.id.editTextApplianceCostPerUnitElectricity);
+            requestEditText.setText(mCostPerUnitElectricity);
+
+            Button saveButton = (Button) changeCpuView.findViewById(R.id.button_AL_alert_Save);
+            Button cancelButton = (Button) changeCpuView.findViewById(R.id.button_AL_alert_Cancel);
+
+            final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder.setView(changeCpuView);
+            alertDialogBuilder.setMessage("Cost Per Unit Electricity :");
+            final AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+
+            saveButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String cpuEntered = requestEditText.getText().toString();
+                    if (cpuEntered != null && !cpuEntered.isEmpty()) {
+                        mCostPerUnitElectricity = Integer.parseInt(cpuEntered);
+                        setCostPerUnitButtonText();
+                        alertDialog.dismiss();
+                    } else {
+                        Toast.makeText(ApplianceListViewActivity.this, "Please Enter a valid Cost Per Unit!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+            cancelButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alertDialog.dismiss();
+                }
+            });
+
+
+        }catch(Exception e){
+            Toast.makeText(ApplianceListViewActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
+        }
     }
 }

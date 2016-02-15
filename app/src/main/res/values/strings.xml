@@ -37,5 +37,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_add_area">AddAreaActivity</string>
     <string name="title_activity_appliance_list_view">ApplianceListViewActivity</string>
+    <string name="appliance_change_cost_per_unit">Enter Cost Per Unit Of Electricity :</string>
 
 </resources>
