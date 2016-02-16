@@ -1,8 +1,10 @@
 package com.ideasunlimited.savingscalculator.ApplianceHelpers;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.ideasunlimited.savingscalculator.DB.DbHelper;
@@ -60,5 +62,37 @@ public class ApplianceDbHelper {
             Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
             return null;
         }
+    }
+
+    public static boolean AddAppliancetoDB(Context context, ApplianceModel model)
+    {
+        try
+        {
+            DBHELPER = new DbHelper(context);
+            db = DBHELPER.getWritableDatabase();
+
+            ContentValues values = new ContentValues();
+            values.put(DbTableConstants.APPLIANCE_AREA_ID, model.ApplianceAreaId);
+            values.put(DbTableConstants.APPLIANCE_NAME, model.ApplianceName);
+            values.put(DbTableConstants.APPLIANCE_WATTAGE, model.ApplianceWattage);
+            values.put(DbTableConstants.APPLIANCE_QUANTITY, model.ApplianceQuantity);
+            values.put(DbTableConstants.APPLIANCE_WORKING_HOURS, model.ApplianceWorkingHours);
+            values.put(DbTableConstants.APPLIANCE_ACTIVE_HOURS, model.ApplianceActiveHours);
+            values.put(DbTableConstants.APPLIANCE_COST_PER_UNIT_ELECTRICITY, model.ApplianceCostPerUnitElectricity);
+            values.put(DbTableConstants.APPLIANCE_COST_PER_DAY, model.ApplianceCostPerDay);
+            values.put(DbTableConstants.APPLIANCE_COST_PER_MONTH, model.ApplianceCostPerMonth);
+            values.put(DbTableConstants.APPLIANCE_SAVINGS_PER_DAY, model.ApplianceCostPerDayAfterSensor);
+            values.put(DbTableConstants.APPLIANCE_SAVINGS_PER_MONTH, model.ApplianceCostPerMonthAfterSensor);
+
+            db.insert(DbTableConstants.APPLIANCE_TABLE_NAME, null, values);
+            return true;
+        }
+        catch(Exception e)
+        {
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+            Log.e("DB ERROR", e.toString());
+            return false;
+        }
+
     }
 }
