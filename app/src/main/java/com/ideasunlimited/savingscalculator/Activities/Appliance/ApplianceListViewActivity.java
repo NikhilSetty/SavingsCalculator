@@ -118,11 +118,6 @@ public class ApplianceListViewActivity extends AppCompatActivity implements Adap
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings)
-        {
-            return true;
-        }
         if (id == R.id.add_appliance)
         {
             CreateAddApplianceDialog();
@@ -131,6 +126,7 @@ public class ApplianceListViewActivity extends AppCompatActivity implements Adap
         return super.onOptionsItemSelected(item);
     }
 
+    // kartik added this method
     public String checkEditText(EditText editText, String message)
     {
         String _content_of_editText = editText.getText().toString();
@@ -146,6 +142,7 @@ public class ApplianceListViewActivity extends AppCompatActivity implements Adap
         }
     }
 
+    // kartik added this method
     public void SaveApplianceDetails(View view)
     {
         ApplianceModel applianceModel = new ApplianceModel();
@@ -168,7 +165,11 @@ public class ApplianceListViewActivity extends AppCompatActivity implements Adap
         applianceModel.ApplianceCostPerDayAfterSensor = "100";
         applianceModel.ApplianceCostPerMonthAfterSensor = "3000";
 
-        if(_ApplianceWattage == "")
+        if(_ApplianceName == "Select an Item")
+        {
+            Toast.makeText(this, "Please select a valid appliance", Toast.LENGTH_SHORT).show();
+        }
+        else if(_ApplianceWattage == "")
         {
             Toast.makeText(this,"Please enter Appliance Wattage",Toast.LENGTH_SHORT).show();
         }
@@ -194,9 +195,6 @@ public class ApplianceListViewActivity extends AppCompatActivity implements Adap
             Toast.makeText(this, "New Appliance has been added", Toast.LENGTH_SHORT).show();
             finish();
         }
-
-
-
     }
 
     public void CancelApplianceDetails(View view)
@@ -204,12 +202,13 @@ public class ApplianceListViewActivity extends AppCompatActivity implements Adap
         dismissAlertDialog();
     }
 
-
+    // kartik added this method
     public void dismissAlertDialog()
     {
         alertDialog.dismiss();
     }
 
+    // kartik added this method
     public void CreateAddApplianceDialog()
     {
         LayoutInflater layoutInflater = LayoutInflater.from(this);
