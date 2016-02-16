@@ -3,6 +3,7 @@
     <string name="action_settings">Settings</string>
     <string name="save">SAVE</string>
     <string name="add_customer">Add Customer</string>
+    <string name="add_appliance">Add Appliance</string>
 
     <!-- Splash Screen Title String -->
     <string name="splash_screen_title">Savings Calculator\nby</string>
@@ -38,5 +39,33 @@
     <string name="title_activity_add_area">AddAreaActivity</string>
     <string name="title_activity_appliance_list_view">ApplianceListViewActivity</string>
     <string name="appliance_change_cost_per_unit">Enter Cost Per Unit Of Electricity :</string>
+
+    <!-- Add Appliance strings-->
+    <string name="appliance_id">Appliance ID</string>
+    <string name="appliance_area_id">Appliance Area ID</string>
+    <string name="appliance_name">Appliance Name</string>
+    <string name="appliance_wattage">Appliance Wattage</string>
+    <string name="appliance_quantity">Appliance Quantity</string>
+    <string name="appliance_working_hours">Appliance Working Hours</string>
+    <string name="appliance_active_hours">Appliance Active Hours</string>
+    <string name="appliance_cost_per_unit_electricity">Appliance Cost Per Unit Electricity</string>
+    <string name="appliance_cost_per_day">Appliance Cost Per Day</string>
+    <string name="appliance_cost_per_month">Appliance Cost Per Month</string>
+    <string name="appliance_cost_per_day_after_sensor">Appliance Cost Per Day After Sensor</string>
+    <string name="appliance_cost_per_month_after_sensor">Appliance Cost Per Month After Sensor</string>
+
+    <!-- Appliance Spinner Resources-->
+    <string-array name="appliances">
+        <item>Select an Item</item>
+        <item>Lamp</item>
+        <item>Fan</item>
+        <item>Tube Light</item>
+        <item>Soldering Gun</item>
+        <item>Washing Machine</item>
+        <item>Table Lamp</item>
+        <item>Mixer</item>
+        <item>Grinder</item>
+        <item>Computer</item>
+    </string-array>
 
 </resources>
