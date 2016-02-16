@@ -3,7 +3,7 @@ package com.ideasunlimited.savingscalculator.DB;
 public class Schema {
 
 	public static final String CREATE_TABLE_CUSOMTER = "create table if not exists " + DbTableConstants.CUSTOMER_TABLE_NAME +
-			"( _id integer primary key autoincrement, " 
+			"( _id integer primary key autoincrement, "
 			+ DbTableConstants.CUSTOMER_NAME + " string, "
 			+ DbTableConstants.CUSTOMER_ADDRESS + " string, "
 			+ DbTableConstants.CUSTOMER_EMAIL_ID + " string, "
@@ -15,7 +15,7 @@ public class Schema {
 			+ DbTableConstants.CUSTOMER_CONTACT_PERSON_NAME + " string )";
 
     public static final String CREATE_TABLE_AREA = "create table if not exists " + DbTableConstants.AREA_TABLE_NAME +
-            "( _id integer primary key,"
+            "( _id integer primary key autoincrement,"
 			+ DbTableConstants.AREA_NAME + " string, "
 			+ DbTableConstants.AREA_SIZE + " string, "
 			+ DbTableConstants.AREA_TOTAL_SAVINGS_PER_DAY + " string, "
@@ -23,7 +23,7 @@ public class Schema {
 			+ DbTableConstants.AREA_CUSTOMER_ID + " string )";
 
 	public static final String CREATE_TABLE_APPLIANCE = "create table if not exists " + DbTableConstants.APPLIANCE_TABLE_NAME +
-			"( _id integer primary key,"
+			"( _id integer primary key autoincrement,"
 			+ DbTableConstants.APPLIANCE_NAME + " string, "
 			+ DbTableConstants.APPLIANCE_QUANTITY + " string, "
 			+ DbTableConstants.APPLIANCE_ACTIVE_HOURS + " string, "
