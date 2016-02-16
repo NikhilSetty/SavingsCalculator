@@ -64,6 +64,21 @@ public class ApplianceDbHelper {
         }
     }
 
+    public static ApplianceModel[] GetAppliancesAsArrayForAnArea(Context context, String areaId){
+        List<ApplianceModel> list = GetAppliancesForAnArea(context, areaId);
+        if(list !=null) {
+            ApplianceModel[] array = new ApplianceModel[list.size()];
+
+            for (int i = 0; i < list.size(); i++) {
+                array[i] = list.get(i);
+            }
+
+            return array;
+        }else{
+            return null;
+        }
+    }
+
     public static boolean AddAppliancetoDB(Context context, ApplianceModel model)
     {
         try

@@ -37,7 +37,7 @@ public class ApplianceListViewActivity extends AppCompatActivity implements Adap
 
     ListView mApplianceListView;
     String mAreaId;
-    List<ApplianceModel> mApplianceList;
+    ApplianceModel[] mApplianceArray;
     AreaModel mAreaModel;
 
     AlertDialog alertDialog;
@@ -72,18 +72,17 @@ public class ApplianceListViewActivity extends AppCompatActivity implements Adap
 
         mApplianceListView = (ListView) findViewById(R.id.listViewApplianceList);
         mButtonCostPerUnitElectricity = (Button) findViewById(R.id.buttonCostPerUnit);
-        mApplianceList = new ArrayList<>();
     }
 
     @Override
     protected void onStart(){
         super.onStart();
 
-        mApplianceList = ApplianceDbHelper.GetAppliancesForAnArea(this, mAreaId);
+        mApplianceArray = ApplianceDbHelper.GetAppliancesAsArrayForAnArea(this, mAreaId);
         mAreaModel = AreaDbHelper.GetAreaDetailsForAreaId(this, mAreaId);
 
-        if(mApplianceList != null) {
-            if (mApplianceList.size() == 0) {
+        if(mApplianceArray != null) {
+            if (mApplianceArray.length == 0) {
                 mCostPerUnitElectricity = 5;
                 setCostPerUnitButtonText();
                 // todo Replace with error text
@@ -95,7 +94,7 @@ public class ApplianceListViewActivity extends AppCompatActivity implements Adap
 
     private void PopulateListView() {
         try{
-            ApplianceListViewAdapter adapter = new ApplianceListViewAdapter(this, (ApplianceModel[]) mApplianceList.toArray());
+            ApplianceListViewAdapter adapter = new ApplianceListViewAdapter(this, mApplianceArray);
 
             mApplianceListView.setAdapter(adapter);
         }catch (Exception e){
