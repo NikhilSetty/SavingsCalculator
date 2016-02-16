@@ -27,9 +27,6 @@ import com.ideasunlimited.savingscalculator.Model.ApplianceModel;
 import com.ideasunlimited.savingscalculator.Model.AreaModel;
 import com.ideasunlimited.savingscalculator.R;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ApplianceListViewActivity extends AppCompatActivity implements AdapterViewCompat.OnItemSelectedListener
 {
     static DbHelper DBHELPER;
