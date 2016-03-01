@@ -11,11 +11,13 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ideasunlimited.savingscalculator.ApplianceHelpers.ApplianceDbHelper;
@@ -26,6 +28,9 @@ import com.ideasunlimited.savingscalculator.DB.DbHelper;
 import com.ideasunlimited.savingscalculator.Model.ApplianceModel;
 import com.ideasunlimited.savingscalculator.Model.AreaModel;
 import com.ideasunlimited.savingscalculator.R;
+
+import java.util.Dictionary;
+import java.util.HashMap;
 
 public class ApplianceListViewActivity extends AppCompatActivity implements AdapterViewCompat.OnItemSelectedListener
 {
@@ -38,7 +43,7 @@ public class ApplianceListViewActivity extends AppCompatActivity implements Adap
     AreaModel mAreaModel;
 
     AlertDialog alertDialog;
-    int mCostPerUnitElectricity;
+    int mCostPerUnitElectricity = 5;
     Button mButtonCostPerUnitElectricity;
 
     Button _buttonSaveApplianceDetails;
@@ -46,7 +51,6 @@ public class ApplianceListViewActivity extends AppCompatActivity implements Adap
 
     Spinner _spinnerApplianceName;
 
-    EditText _editTextApplianceWattage;
     EditText _editTextApplianceQuantity;
     EditText _editTextApplianceWorkingHours;
     EditText _editTextApplianceActiveHours;
@@ -57,6 +61,8 @@ public class ApplianceListViewActivity extends AppCompatActivity implements Adap
     String _ApplianceWorkingHours;
     String _ApplianceActiveHours;
     String _ApplianceCostPerUnitElectricity;
+
+    HashMap<String, String> mApplianceList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +75,15 @@ public class ApplianceListViewActivity extends AppCompatActivity implements Adap
         mApplianceListView = (ListView) findViewById(R.id.listViewApplianceList);
         mButtonCostPerUnitElectricity = (Button) findViewById(R.id.buttonCostPerUnit);
 
-        mCostPerUnitElectricity = 5;
+        mApplianceList = new HashMap<>();
+
+        mApplianceList.put("TubeLight 40W", "40");
+        mApplianceList.put("Fan 40W", "40");
+        mApplianceList.put("Incandescent Bulb 40W", "40");
+        mApplianceList.put("AC 200W", "200");
+        mApplianceList.put("TubeLight 20W", "20");
+        mApplianceList.put("TubeLight 800W", "80");
+
         setCostPerUnitButtonText();
     }
 
@@ -95,6 +109,9 @@ public class ApplianceListViewActivity extends AppCompatActivity implements Adap
         try{
             ApplianceListViewAdapter adapter = new ApplianceListViewAdapter(this, mApplianceArray);
             mApplianceListView.setAdapter(adapter);
+
+            mCostPerUnitElectricity = Integer.parseInt(mApplianceArray[0].ApplianceCostPerUnitElectricity);
+            setCostPerUnitButtonText();
 
         }catch (Exception e){
             Toast.makeText(ApplianceListViewActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
@@ -145,7 +162,6 @@ public class ApplianceListViewActivity extends AppCompatActivity implements Adap
     {
         ApplianceModel applianceModel = new ApplianceModel();
 
-        _ApplianceWattage = "40";
         _ApplianceQuantity = checkEditText(_editTextApplianceQuantity,"Please Enter Appliance Quantity");
         _ApplianceWorkingHours = checkEditText(_editTextApplianceWorkingHours,"Please Appliance Enter Working Hours");
         _ApplianceActiveHours = checkEditText(_editTextApplianceActiveHours, "Please Appliance Active Hours");
@@ -191,6 +207,8 @@ public class ApplianceListViewActivity extends AppCompatActivity implements Adap
             ApplianceDbHelper.AddAppliancetoDB(this, applianceModel);
             Toast.makeText(this, "New Appliance has been added", Toast.LENGTH_SHORT).show();
         }
+        dismissAlertDialog();
+        PopulateListView();
     }
 
     public void CancelApplianceDetails(View view)
@@ -219,9 +237,28 @@ public class ApplianceListViewActivity extends AppCompatActivity implements Adap
 
         _spinnerApplianceName = (Spinner)addApplianceView.findViewById(R.id.spinnerApplianceName);
 
-        ArrayAdapter<CharSequence> _applianceArrayAdapter = ArrayAdapter.createFromResource(this, R.array.appliances, android.R.layout.simple_spinner_dropdown_item);
+        final TextView applianceWattage = (TextView) addApplianceView.findViewById(R.id.textview_appliance_wattage);
+
+        //ArrayAdapter<CharSequence> _applianceArrayAdapter = ArrayAdapter.createFromResource(this, mApplianceList.keySet(), android.R.layout.simple_spinner_dropdown_item);
+
+        ArrayAdapter<String> _applianceArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, mApplianceList.keySet().toArray(new String[mApplianceList.size()]));
+        _applianceArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         _spinnerApplianceName.setAdapter(_applianceArrayAdapter);
 
+        _spinnerApplianceName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                applianceWattage.setText("Appliance Wattage : " + mApplianceList.get(_spinnerApplianceName.getSelectedItem().toString()));
+                _ApplianceWattage = mApplianceList.get(_spinnerApplianceName.getSelectedItem().toString());
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setView(addApplianceView);
