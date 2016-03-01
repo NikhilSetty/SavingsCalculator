@@ -44,7 +44,7 @@
     <string name="appliance_id">Appliance ID</string>
     <string name="appliance_area_id">Appliance Area ID</string>
     <string name="appliance_name">Appliance Name</string>
-    <string name="appliance_wattage">Appliance Wattage</string>
+    <string name="appliance_wattage">Appliance Wattage : </string>
     <string name="appliance_quantity">Appliance Quantity</string>
     <string name="appliance_working_hours">Appliance Working Hours</string>
     <string name="appliance_active_hours">Appliance Active Hours</string>

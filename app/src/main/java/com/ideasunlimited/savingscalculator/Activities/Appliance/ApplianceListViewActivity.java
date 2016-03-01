@@ -68,6 +68,9 @@ public class ApplianceListViewActivity extends AppCompatActivity implements Adap
 
         mApplianceListView = (ListView) findViewById(R.id.listViewApplianceList);
         mButtonCostPerUnitElectricity = (Button) findViewById(R.id.buttonCostPerUnit);
+
+        mCostPerUnitElectricity = 5;
+        setCostPerUnitButtonText();
     }
 
     @Override
@@ -91,8 +94,8 @@ public class ApplianceListViewActivity extends AppCompatActivity implements Adap
     private void PopulateListView() {
         try{
             ApplianceListViewAdapter adapter = new ApplianceListViewAdapter(this, mApplianceArray);
-
             mApplianceListView.setAdapter(adapter);
+
         }catch (Exception e){
             Toast.makeText(ApplianceListViewActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
             // todo Replace with error text
@@ -142,15 +145,16 @@ public class ApplianceListViewActivity extends AppCompatActivity implements Adap
     {
         ApplianceModel applianceModel = new ApplianceModel();
 
-        _ApplianceWattage = checkEditText(_editTextApplianceWattage,"Please Enter Appliance Wattage");
+        _ApplianceWattage = "40";
         _ApplianceQuantity = checkEditText(_editTextApplianceQuantity,"Please Enter Appliance Quantity");
         _ApplianceWorkingHours = checkEditText(_editTextApplianceWorkingHours,"Please Appliance Enter Working Hours");
-        _ApplianceActiveHours = checkEditText(_editTextApplianceActiveHours,"Please Appliance Active Hours");
+        _ApplianceActiveHours = checkEditText(_editTextApplianceActiveHours, "Please Appliance Active Hours");
 
         // the cost per unit electricity integer is converted to String object in the below line
         _ApplianceCostPerUnitElectricity = String.valueOf(mCostPerUnitElectricity);
+        _ApplianceName = _spinnerApplianceName.getSelectedItem().toString();
 
-        applianceModel.ApplianceAreaId = "12345";
+        applianceModel.ApplianceAreaId = mAreaId;
         applianceModel.ApplianceName = _ApplianceName;
         applianceModel.ApplianceWattage = _ApplianceWattage;
         applianceModel.ApplianceQuantity = _ApplianceQuantity;
@@ -162,23 +166,23 @@ public class ApplianceListViewActivity extends AppCompatActivity implements Adap
         applianceModel.ApplianceCostPerDayAfterSensor = "100";
         applianceModel.ApplianceCostPerMonthAfterSensor = "3000";
 
-        if(_ApplianceName == "Select an Item")
+        if(_ApplianceName.equals("Select an Item"))
         {
             Toast.makeText(this, "Please select a valid appliance", Toast.LENGTH_SHORT).show();
         }
-        else if(_ApplianceWattage == "")
+        else if(_ApplianceWattage.equals(""))
         {
             Toast.makeText(this,"Please enter Appliance Wattage",Toast.LENGTH_SHORT).show();
         }
-        else if(_ApplianceQuantity == "")
+        else if(_ApplianceQuantity.equals(""))
         {
             Toast.makeText(this,"Please enter Appliance Quantity",Toast.LENGTH_SHORT).show();
         }
-        else if(_ApplianceWorkingHours == "")
+        else if(_ApplianceWorkingHours.equals(""))
         {
             Toast.makeText(this,"Please enter Appliance Working Hours",Toast.LENGTH_SHORT).show();
         }
-        else if(_ApplianceActiveHours == "")
+        else if(_ApplianceActiveHours.equals(""))
         {
             Toast.makeText(this,"Please enter Appliance Active Hours",Toast.LENGTH_SHORT).show();
         }
@@ -209,7 +213,6 @@ public class ApplianceListViewActivity extends AppCompatActivity implements Adap
         _buttonSaveApplianceDetails = (Button)addApplianceView.findViewById(R.id.button_appliance_save);
         _buttonCancelApplianceDetails = (Button)addApplianceView.findViewById(R.id.button_appliance_cancel);
 
-        _editTextApplianceWattage = (EditText)addApplianceView.findViewById(R.id.edittext_appliance_wattage);
         _editTextApplianceQuantity = (EditText)addApplianceView.findViewById(R.id.edittext_appliance_quantity);
         _editTextApplianceWorkingHours = (EditText)addApplianceView.findViewById(R.id.edittext_appliance_working_hours);
         _editTextApplianceActiveHours = (EditText)addApplianceView.findViewById(R.id.edittextappliance_active_hours);
@@ -231,7 +234,6 @@ public class ApplianceListViewActivity extends AppCompatActivity implements Adap
     @Override
     public void onItemSelected(AdapterViewCompat<?> parent, View view, int position, long id)
     {
-        // Kartik added this
         CharSequence charSequence = (CharSequence)parent.getItemAtPosition(position);
         _ApplianceName = charSequence.toString();
     }

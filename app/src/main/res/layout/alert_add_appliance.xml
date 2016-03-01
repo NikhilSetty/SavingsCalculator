@@ -19,18 +19,11 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/spinnerApplianceName" />
 
-            <android.support.design.widget.TextInputLayout
+            <TextView android:id="@+id/edittext_appliance_wattage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
-                <EditText android:id="@+id/edittext_appliance_wattage"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="phone"
-                    android:hint="@string/appliance_wattage"/>
-            </android.support.design.widget.TextInputLayout>
+                android:textSize="20sp"
+                android:hint="@string/appliance_wattage"/>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"

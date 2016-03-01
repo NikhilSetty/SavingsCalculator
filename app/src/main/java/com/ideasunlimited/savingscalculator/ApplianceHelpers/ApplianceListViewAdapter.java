@@ -43,14 +43,14 @@ public class ApplianceListViewAdapter extends ArrayAdapter<ApplianceModel> {
         TextView textViewCostPerMonthAfterSensor = (TextView) rowView.findViewById(R.id.textViewApplianceCostAfterInstallingSensorPerMonth);
 
         textViewApplianceName.setText(model.ApplianceName);
-        textViewApplianceWattage.setText(model.ApplianceWattage);
-        textViewApplianceQuantity.setText(model.ApplianceQuantity);
-        textViewActiveHours.setText(model.ApplianceActiveHours);
-        textViewWorkingHours.setText(model.ApplianceWorkingHours);
-        textViewCostPerDay.setText(model.ApplianceCostPerDay);
-        textViewCostPerMonth.setText(model.ApplianceCostPerMonth);
-        textViewCostPerDayAfterSensor.setText(model.ApplianceCostPerDayAfterSensor);
-        textViewCostPerMonthAfterSensor.setText(model.ApplianceCostPerMonthAfterSensor);
+        textViewApplianceWattage.setText("Watt : " +model.ApplianceWattage);
+        textViewApplianceQuantity.setText("Nos : " + model.ApplianceQuantity);
+        textViewActiveHours.setText("AH : " + model.ApplianceActiveHours);
+        textViewWorkingHours.setText("WH : " +model.ApplianceWorkingHours);
+        textViewCostPerDay.setText("CPD : " + model.ApplianceCostPerDay);
+        textViewCostPerMonth.setText("CPM : " + model.ApplianceCostPerMonth);
+        textViewCostPerDayAfterSensor.setText("CPD-S : " + model.ApplianceCostPerDayAfterSensor);
+        textViewCostPerMonthAfterSensor.setText("CPM-M : " + model.ApplianceCostPerMonthAfterSensor);
 
         return rowView;
     }
