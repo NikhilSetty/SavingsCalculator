@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.ideasunlimited.savingscalculator.Model.ApplianceModel;
 import com.ideasunlimited.savingscalculator.R;
+import com.ideasunlimited.savingscalculator.StaticHelper;
 
 /**
  * Created by nravishankar on 2/15/2016.
@@ -42,6 +43,8 @@ public class ApplianceListViewAdapter extends ArrayAdapter<ApplianceModel> {
         TextView textViewCostPerDayAfterSensor = (TextView) rowView.findViewById(R.id.textViewApplianceCostAfterInstallingSensorPerDay);
         TextView textViewCostPerMonthAfterSensor = (TextView) rowView.findViewById(R.id.textViewApplianceCostAfterInstallingSensorPerMonth);
 
+        TextView textViewTotalAreaSavings = (TextView) rowView.findViewById(R.id.textViewApplianceTotalSavings);
+
         textViewApplianceName.setText(model.ApplianceName);
         textViewApplianceWattage.setText("Watt : " +model.ApplianceWattage);
         textViewApplianceQuantity.setText("Nos : " + model.ApplianceQuantity);
@@ -51,6 +54,10 @@ public class ApplianceListViewAdapter extends ArrayAdapter<ApplianceModel> {
         textViewCostPerMonth.setText("CPM : " + model.ApplianceCostPerMonth);
         textViewCostPerDayAfterSensor.setText("CPD-S : " + model.ApplianceCostPerDayAfterSensor);
         textViewCostPerMonthAfterSensor.setText("CPM-M : " + model.ApplianceCostPerMonthAfterSensor);
+
+        double cpm = Double.parseDouble(model.ApplianceCostPerMonth);
+        double cpmAfterSensor = Double.parseDouble(model.ApplianceCostPerMonthAfterSensor);
+        textViewTotalAreaSavings.setText(Double.toString(cpm - cpmAfterSensor));
 
         return rowView;
     }

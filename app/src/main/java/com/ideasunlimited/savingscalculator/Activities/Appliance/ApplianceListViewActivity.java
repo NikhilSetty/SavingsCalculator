@@ -28,6 +28,7 @@ import com.ideasunlimited.savingscalculator.DB.DbHelper;
 import com.ideasunlimited.savingscalculator.Model.ApplianceModel;
 import com.ideasunlimited.savingscalculator.Model.AreaModel;
 import com.ideasunlimited.savingscalculator.R;
+import com.ideasunlimited.savingscalculator.StaticHelper;
 
 import java.util.Dictionary;
 import java.util.HashMap;
@@ -64,6 +65,8 @@ public class ApplianceListViewActivity extends AppCompatActivity implements Adap
 
     HashMap<String, String> mApplianceList;
 
+    TextView mApplianceListTotalSavings;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +77,8 @@ public class ApplianceListViewActivity extends AppCompatActivity implements Adap
 
         mApplianceListView = (ListView) findViewById(R.id.listViewApplianceList);
         mButtonCostPerUnitElectricity = (Button) findViewById(R.id.buttonCostPerUnit);
+
+        mApplianceListTotalSavings = (TextView) findViewById(R.id.applianceList_TotalSavings);
 
         mApplianceList = new HashMap<>();
 
@@ -90,33 +95,44 @@ public class ApplianceListViewActivity extends AppCompatActivity implements Adap
     @Override
     protected void onStart(){
         super.onStart();
-
-        mApplianceArray = ApplianceDbHelper.GetAppliancesAsArrayForAnArea(this, mAreaId);
-        mAreaModel = AreaDbHelper.GetAreaDetailsForAreaId(this, mAreaId);
-
-        if(mApplianceArray != null) {
-            if (mApplianceArray.length == 0) {
-                mCostPerUnitElectricity = 5;
-                setCostPerUnitButtonText();
-                // todo Replace with error text
-            } else {
-                PopulateListView();
-            }
-        }
+        PopulateListView();
     }
 
     private void PopulateListView() {
         try{
-            ApplianceListViewAdapter adapter = new ApplianceListViewAdapter(this, mApplianceArray);
-            mApplianceListView.setAdapter(adapter);
 
-            mCostPerUnitElectricity = Integer.parseInt(mApplianceArray[0].ApplianceCostPerUnitElectricity);
-            setCostPerUnitButtonText();
+            StaticHelper.TotalAreaSavings = 0;
+
+            mApplianceArray = ApplianceDbHelper.GetAppliancesAsArrayForAnArea(this, mAreaId);
+            mAreaModel = AreaDbHelper.GetAreaDetailsForAreaId(this, mAreaId);
+
+            if(mApplianceArray != null) {
+                if (mApplianceArray.length == 0) {
+                    mCostPerUnitElectricity = 5;
+                    setCostPerUnitButtonText();
+                    // todo Replace with error text
+                } else {
+                    ApplianceListViewAdapter adapter = new ApplianceListViewAdapter(this, mApplianceArray);
+                    mApplianceListView.setAdapter(adapter);
+
+                    mCostPerUnitElectricity = Integer.parseInt(mApplianceArray[0].ApplianceCostPerUnitElectricity);
+                    setCostPerUnitButtonText();
+
+                    for(int i = 0; i < mApplianceArray.length; i++){
+                        StaticHelper.TotalAreaSavings += Double.parseDouble(mApplianceArray[i].ApplianceCostPerMonth) - Double.parseDouble(mApplianceArray[i].ApplianceCostPerMonthAfterSensor);
+                    }
+                }
+            }
+            SetTotalSavingsText();
 
         }catch (Exception e){
             Toast.makeText(ApplianceListViewActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
             // todo Replace with error text
         }
+    }
+
+    private void SetTotalSavingsText() {
+        mApplianceListTotalSavings.setText(Double.toString(StaticHelper.TotalAreaSavings));
     }
 
     @Override
@@ -177,10 +193,13 @@ public class ApplianceListViewActivity extends AppCompatActivity implements Adap
         applianceModel.ApplianceWorkingHours = _ApplianceWorkingHours;
         applianceModel.ApplianceActiveHours = _ApplianceActiveHours;
         applianceModel.ApplianceCostPerUnitElectricity = _ApplianceCostPerUnitElectricity;
-        applianceModel.ApplianceCostPerDay = "120";
-        applianceModel.ApplianceCostPerMonth = "3600";
-        applianceModel.ApplianceCostPerDayAfterSensor = "100";
-        applianceModel.ApplianceCostPerMonthAfterSensor = "3000";
+
+        applianceModel = CalculateConsumptionValues(applianceModel);
+
+        if(applianceModel == null){
+            Toast.makeText(this, "Cannot add Appliance", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         if(_ApplianceName.equals("Select an Item"))
         {
@@ -209,6 +228,34 @@ public class ApplianceListViewActivity extends AppCompatActivity implements Adap
         }
         dismissAlertDialog();
         PopulateListView();
+    }
+
+    private ApplianceModel CalculateConsumptionValues(ApplianceModel applianceModel) {
+        try{
+            ApplianceModel model = applianceModel;
+
+            double applianceWattage = Double.parseDouble(applianceModel.ApplianceWattage);
+            double applianceWorkingHours = Double.parseDouble(applianceModel.ApplianceWorkingHours);
+            double applianceActiveHours = Double.parseDouble(applianceModel.ApplianceActiveHours);
+
+            // Without Sensor
+            double kiloWattHoursPerDay = (applianceWattage * applianceWorkingHours) / 1000;
+            double costPerDayWithoutSensor = kiloWattHoursPerDay * mCostPerUnitElectricity;
+            model.ApplianceCostPerDay = Double.toString(costPerDayWithoutSensor);
+            model.ApplianceCostPerMonth = Double.toString(costPerDayWithoutSensor * 30);
+
+            // With Sensor
+            kiloWattHoursPerDay = (applianceWattage * applianceActiveHours) / 1000;
+            double costPerDayWithSensor = kiloWattHoursPerDay * mCostPerUnitElectricity;
+            model.ApplianceCostPerDayAfterSensor = Double.toString(costPerDayWithSensor);
+            model.ApplianceCostPerMonthAfterSensor = Double.toString(costPerDayWithSensor * 30);
+
+            return model;
+
+        }catch (Exception e){
+            Toast.makeText(ApplianceListViewActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
+            return null;
+        }
     }
 
     public void CancelApplianceDetails(View view)
